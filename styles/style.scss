@@ -1,0 +1,229 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700&display=swap');
+
+// TODO: adjust/improve animation time
+
+/**
+* Colors
+*/
+
+$cod-gray: #151313;
+$rolling-stone: #7d7f80;
+$tundora: #484747;
+$caribbean-green: #00e2ae;
+$white: #ffffff;
+
+/**
+* Font weights
+*/
+
+$font-weight-light: 300;
+$font-weight-regular: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+/**
+* Timing functions
+*/
+
+$ease-in-sine: cubic-bezier(0.47, 0, 0.745, 0.715);
+$ease-in-cubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+$ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+$ease-out-back: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+$ease-in-out-quad: cubic-bezier(0.455, 0.03, 0.515, 0.955);
+$ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
+
+/**
+* Styles
+*/
+
+html {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*, 
+*:before, 
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: $cod-gray;
+}
+
+.app-header {
+  text-align: center;
+  padding: 4em 2em;
+}
+
+.app-header-title {
+  font-size: 2rem;
+  font-weight: $font-weight-bold;
+  color: $white;
+  margin: 0;
+  
+  span {
+    display: block;
+    color: $rolling-stone;
+    font-size: 1.25rem;
+    font-weight: $font-weight-regular;
+    padding: 0.5em 0;
+  }
+}
+
+.app-menu {
+  padding-top: 42px !important;
+}
+
+.app-content {
+   max-width: 1080px;
+   margin: 0px auto;
+}
+
+.menu {
+  position: relative;
+  list-style: none;
+  padding: 13px 0;
+  margin: 0;
+}
+
+.menu-item {
+  position: relative;
+  display: inline;
+  cursor: pointer;
+  color: $tundora;
+  font-size: 0.875rem;
+  font-weight: $font-weight-bold;
+  text-transform: uppercase;
+  padding: 13px 0;
+  margin: 0 16px;
+  transition: color 300ms;
+  
+  &:hover {
+    color: $white;
+  }
+  
+  &:before {
+    position: absolute;
+    display: inline-block;
+    background: $caribbean-green;
+    content:"\A";
+    opacity: 0;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    bottom: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: opacity 300ms;
+  }
+  
+  &.active {
+    color: $white;
+    
+    &:before {
+      opacity: 1;
+    }
+  }
+}
+
+.masonry-grid {
+  margin: 0 auto;
+}
+
+.masonry-grid-item {
+  width: 230px;
+  margin-bottom: 32px;
+}
+
+.image-card {
+  width: 100%;
+  filter: grayscale(100%);
+  transition: filter 300ms linear;
+  
+  &:hover {
+    filter: grayscale(0%);
+  }
+}
+
+.loader {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  margin: 20vh auto;
+}
+
+.double-bounce1,
+.double-bounce2 {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  opacity: 0.6;
+  position: absolute;
+  background-color: $white;
+  top: 0;
+  left: 0;
+  animation: bounce 2s infinite ease-in-out;
+}
+
+.double-bounce2 {
+  animation-delay: -1s;
+}
+
+.fade {
+  opacity: 0;
+  transition: opacity 300ms $ease-in-out-quad;
+}
+
+.fade-enter-done {
+  opacity: 1;
+}
+
+.fade-exit-done {
+  opacity: 0;
+}
+
+.grow {
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 300ms, transform ease-in-out 300ms;
+}
+
+.grow-enter-done {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.grow-exit-done {
+  opacity: 0;
+  transform: scale(0);
+}
+
+.slide {
+  opacity: 0;  
+  transform: translateY(400px);
+  transition: opacity 300ms, transform 600ms $ease-out-quad;
+}
+
+.slide-enter-done {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.slide-exit-done {
+  opacity: 0;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+}
+
