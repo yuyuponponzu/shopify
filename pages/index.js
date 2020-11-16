@@ -4,6 +4,7 @@ import AppHeader from '../components/app_header';
 import Menu from '../components/Menu';
 import MansonryGrid from '../components/mansonry_grid';
 import ImageCard from '../components/image_card';
+import Fade from '../components/fade';
 
 class Home_ extends React.Component {
     constructor(props) {
@@ -42,7 +43,7 @@ class Home_ extends React.Component {
                     <div className="app-content">
                         <MansonryGrid
                             key={this.props.effect}
-                            transition={this.props.effect}
+                            transition="fade"
                             items={this.props.images}
                             itemRenderer={this.itemRenderer}
                             loaded={this.props.loaded}

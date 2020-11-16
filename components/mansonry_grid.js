@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Fade from './fade';
 import Loader from './loader';
 import TransitionEffect from './transition_effect';
-import Grow from './grow';
+// import Grow from './grow';
 
 class MansonryGrid_ extends React.Component {
     constructor(props) {
@@ -31,12 +31,12 @@ class MansonryGrid_ extends React.Component {
     }
 
     render() {
-        const { key, transition, items, itemRenderer, loaded } = this.props;
+        const { transition, items, itemRenderer, loaded } = this.props;
         return (
             <div className="masonry-grid">
-                <Grow
+                <Fade
                     // inがトリガー
-                    in={!this.props.loaded}
+                    in={!loaded}
                     timeout={{
                         enter: 300,
                         exit: 300,
@@ -46,9 +46,10 @@ class MansonryGrid_ extends React.Component {
                 >
                     {/* Grow内で呼び出し */}
                     <Loader />
-                </Grow>
+                </Fade>
                 {items.map((item, index) => (
                     // childrenとしてTransitionEffect内でdivタグ以下を読み出し
+                    // カードがおのおの呼び出される
                     <TransitionEffect key={index} name={transition} in={loaded} timeout={600}>
                         <div
                             className="masonry-grid-item"
