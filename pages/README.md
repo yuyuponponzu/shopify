@@ -21,35 +21,38 @@
 
 ### JSX記法はHTMLではない。
 
-すごい似てるけど、JSXはあくまでJSであって、HTMLではない。
+* すごい似てるけど、JSXはあくまでJSであって、HTMLではない。
 
-### コンポーネント内で定義し使用する関数は、必ずコンストラクタ内でbindする。(example)this.itemRender = this.itemRender.bind(this))
+### コンポーネント内で定義し使用する関数は、必ずコンストラクタ内でbindする。
+* (example)this.itemRender = this.itemRender.bind(this))
 
 ### CSS系
 
 #### Nextはすでにcssとscssのサポートライブラリが組み込まれている。
 
-特に意識せずにimportできる。import時は以下の性質がある。
+* 特に意識せずにimportできる。import時は以下の性質がある。
 
-* components内に、**.modules.cssとしてcssを保存する。
+1. components内に、**.modules.cssとしてcssを保存する。
 
-* styles としてこのファイルをインポートする
+1. styles としてこのファイルをインポートする
 
-* styles.<class-name> を className として使う。（例えばクラス名がcontainerの場合、styles.container を使う）
+1. styles.<class-name> を className として使う。
+  
+  （例えばクラス名がcontainerの場合、styles.container を使う）
 
 #### グローバルなスタイルの定義方法
 
-pages ディレクトリ配下の _app.js 内で、好きな場所に置いたスタイルファイルをimportする。
+* pages ディレクトリ配下の _app.js 内で、好きな場所に置いたスタイルファイルをimportする。
 
 ### Redux
-データの貯蔵庫。ストアにデータをためといて、それを一方向的にコンポーネント側で取得する。
+* データの貯蔵庫。ストアにデータをためといて、それを一方向的にコンポーネント側で取得する。
 
-何か操作したいときは都度dispatchに渡して操作。
+* 何か操作したいときは都度dispatchに渡して操作。
 
-stateは直接いじらない。コンポーネント内にstateを作らない。
+* stateは直接いじらない。コンポーネント内にstateを作らない。
 
-基本的に、親コンポーネントからpropsを呼び出し、操作するようにする。（子コンポーネントに渡し、子コンポーネントは親に対して影響を作らないようにする。）
+* 基本的に、親コンポーネントからpropsを呼び出し、操作するようにする。（子コンポーネントに渡し、子コンポーネントは親に対して影響を作らないようにする。）
 
-またこれに関連して、子コンポーネントでのconnectもできれば最小限にしたい。dispatchするときは仕方ないけど、極力そうならないよう実装する。
+* またこれに関連して、子コンポーネントでのconnectもできれば最小限にしたい。dispatchするときは仕方ないけど、極力そうならないよう実装する。
 
 (2019年以前のReduxの書き方をしているので、最新版にfixしていけると良いかも)
