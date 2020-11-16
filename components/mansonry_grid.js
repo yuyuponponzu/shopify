@@ -1,30 +1,42 @@
-const MansonryGrid = (key, transition, items, itemRenderer) => {
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import Fade from './fade';
+import Loader from './loader';
+import TransitionEffect from './transition_effect';
+import Grow from './grow';
+
+class MansonryGrid_ extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
     handleLayoutComplete = () => {
-        this.setState({
-            loaded: true,
-        });
+        return this.props.dispatch({ type: 'LOADED_TRUE' });
     };
 
-    componentDidMount() = () => {
+    componentDidMount() {
+        const imagesLoaded = require('imagesloaded');
         imagesLoaded('.masonry-grid', () => {
-            this.masonry = new Masonry('.masonry-grid', {
+            const Masonry = require('masonry-layout');
+            let masonry = new Masonry('.masonry-grid', {
                 initLayout: false,
                 fitWidth: true,
                 gutter: 32,
                 itemSelector: '.masonry-grid-item',
             });
-
-            this.masonry.once('layoutComplete', this.handleLayoutComplete);
-            this.masonry.layout();
+            masonry.once('layoutComplete', this.handleLayoutComplete);
+            masonry.layout();
         });
     }
-        const loaded  = this.props.loaded;
 
+    render() {
+        const { key, transition, items, itemRenderer, loaded } = this.props;
         return (
             <div className="masonry-grid">
-                <Fade
-                    in={!loaded}
+                <Grow
+                    // inがトリガー
+                    in={!this.props.loaded}
                     timeout={{
                         enter: 300,
                         exit: 300,
@@ -32,10 +44,12 @@ const MansonryGrid = (key, transition, items, itemRenderer) => {
                     mountOnEnter
                     unmountOnExit
                 >
+                    {/* Grow内で呼び出し */}
                     <Loader />
-                </Fade>
+                </Grow>
                 {items.map((item, index) => (
-                    <TransitionEffect name={transition} in={loaded} timeout={600}>
+                    // childrenとしてTransitionEffect内でdivタグ以下を読み出し
+                    <TransitionEffect key={index} name={transition} in={loaded} timeout={600}>
                         <div
                             className="masonry-grid-item"
                             style={{
@@ -49,20 +63,22 @@ const MansonryGrid = (key, transition, items, itemRenderer) => {
                 ))}
             </div>
         );
-    };
+    }
+}
 
-MansonryGrid.propTypes = {
+MansonryGrid_.propTypes = {
     transition: PropTypes.string,
     items: PropTypes.array,
     itemRenderer: PropTypes.func,
     onLoaded: PropTypes.func,
 };
 
-MansonryGrid.defaultProps = {
+MansonryGrid_.defaultProps = {
     transition: 'fade',
     items: [],
     itemRenderer: () => {},
     onLoaded: () => {},
 };
 
+const MansonryGrid = connect((state) => state)(MansonryGrid_);
 export default MansonryGrid;

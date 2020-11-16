@@ -1,3 +1,6 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+
 const AppHeader = ({ title, subtitle, children }) => (
     <div className="app-header">
         <h1 className="app-header-title">

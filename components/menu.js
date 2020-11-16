@@ -1,10 +1,14 @@
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
 const Menu = ({ className, options, selected, onSelect }) => {
     const handleItemClick = (effect) => () => onSelect(effect);
 
     return (
         <ul className={classNames('menu', className)}>
-            {options.map((option) => (
+            {options.map((option, index) => (
                 <li
+                    key={index}
                     className={classNames('menu-item', {
                         active: selected === option,
                     })}

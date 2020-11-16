@@ -1,9 +1,14 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { CSSTransition } from 'react-transition-group';
+
 const TransitionEffect = ({ name, children, ...other }) => (
-    <ReactTransitionGroup.CSSTransition classNames={name} appear {...other}>
+    <CSSTransition classNames={name} appear {...other}>
         {React.cloneElement(children, {
             className: classNames(children.props.className, name),
         })}
-    </ReactTransitionGroup.CSSTransition>
+    </CSSTransition>
 );
 
 TransitionEffect.propTypes = {
