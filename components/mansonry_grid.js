@@ -47,6 +47,7 @@ class MansonryGrid_ extends React.Component {
                     {/* Grow内で呼び出し */}
                     <Loader />
                 </Fade>
+
                 {items.map((item, index) => (
                     // childrenとしてTransitionEffect内でdivタグ以下を読み出し
                     // カードがおのおの呼び出される
