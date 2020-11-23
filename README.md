@@ -69,6 +69,6 @@ git cloneして、developブランチに移動。
   
   1. path通してnode ls できること確認。
   
-  (anyenv通してnodeenv入れてたら、プロジェクトルートに移動して、nodenv local {nodeのver}をするだけで、プロジェクト毎にver管理できる)
+  (anyenv通しても通してなくても）nodeenv入れてたら、プロジェクトルートに移動して、nodenv local {nodeのver}をするだけで、プロジェクト毎にver管理できる)
   
   とりあえず安定版ぽい node 14.14.0 で動かしてます。
