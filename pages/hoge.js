@@ -6,11 +6,18 @@ import MansonryGrid from '../components/mansonry_grid';
 import ImageCard from '../components/image_card';
 import Fade from '../components/fade';
 import Link from 'next/link';
+import fetch from 'node-fetch';
 
-class Home_ extends React.Component {
+class hoge_ extends React.Component {
     constructor(props) {
         super(props);
     }
+
+    RequestImages = async (req) => {
+        const res = await fetch('/admin/api/2021-01/products.json?product_type=' + req);
+        const json = await res.json();
+        return await json.products.map((ret) => ret.image.src);
+    };
 
     handleEffectSelect = (effect) => {
         return this.props.dispatch({ type: 'CHENGE_MENU', effect: effect });
@@ -21,15 +28,18 @@ class Home_ extends React.Component {
     };
 
     render() {
+        // const a = this.RequestImages(this.props.effect);
+        const a = this.RequestImages('pants');
+        console.log(a);
         return (
             <div>
-                {/* Header領域 */}
+                {/* Header�̈� */}
                 {/* <Head>
                 <title>Create Bayashi!</title>
                 <link rel="icon" href="/favicon.ico" />
                 </Head> */}
 
-                {/* Main領域 */}
+                {/* Main�̈� */}
                 <React.Fragment>
                     <AppHeader title="shop">
                         {' '}
@@ -46,14 +56,15 @@ class Home_ extends React.Component {
                         <MansonryGrid
                             key={this.props.effect}
                             transition="fade"
-                            items={this.props.images}
+                            // items={['a','a']}
+                            items={[a]}
                             itemRenderer={this.itemRenderer}
                             loaded={this.props.loaded}
                         />
                     </div>
                 </React.Fragment>
 
-                {/* Footer領域 (あとで使うとき用) */}
+                {/* Footer�̈� (���ƂŎg���Ƃ��p) */}
                 {/* <footer className={styles.footer}>
                     <a
                         href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
@@ -69,5 +80,5 @@ class Home_ extends React.Component {
     }
 }
 
-const Home = connect((state) => state)(Home_);
-export default Home;
+const Hoge = connect((state) => state)(hoge_);
+export default Hoge;

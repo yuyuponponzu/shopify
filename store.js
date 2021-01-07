@@ -22,9 +22,9 @@ const test_photo = [
 
 // ステート初期値
 const initial = {
-    effect: 'item',
+    effect: 'tops',
     loaded: false,
-    menu_list: ['top', 'item', 'myAccount', 'question'],
+    menu_list: ['tops', 'pants', 'myAccount', 'question', 'hoge'],
     images: [
         ...Array.from(new Array(18)).map(
             (v, i) => 'https://www.awonderfulwonderland.com/img/20aw' + String(10 + i) + '.jpg'
