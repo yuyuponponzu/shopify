@@ -14,7 +14,8 @@ app.prepare().then(() => {
         '/admin/api/2021-01/products.json',
         createProxyMiddleware({
             target:
-                'https://362e1f09b3f0ecf8d524eaaaf46c3624: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@okok1121.myshopify.com',
+                // 'https://362e1f09b3f0ecf8d524eaaaf46c3624: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@okok1121.myshopify.com',
+                'https://okok1121.myshopify.com',
             changeOrigin: true,
         })
     );

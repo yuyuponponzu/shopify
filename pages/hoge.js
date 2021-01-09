@@ -14,9 +14,21 @@ class hoge_ extends React.Component {
     }
 
     RequestImages = async (req) => {
-        const res = await fetch('/admin/api/2021-01/products.json?product_type=' + req);
+        const opt =
+            {
+                headers: {
+                    'Authorization':'Basic MzYyZTFmMDliM2YwZWNmOGQ1MjRlYWFhZjQ2YzM2MjQ6c2hwcGFfMDcwOWVjYTM3MDg5MDM0YmQ2OGRjNDFlN2ZkYjc1Mjc='
+                }
+            };
+        const res = await fetch(
+            '/admin/api/2021-01/products.json?product_type=' + req,
+            opt
+        );
         const json = await res.json();
-        return await json.products.map((ret) => ret.image.src);
+        const image_list = await json.products.map((ret) => ret.image.src);
+        console.log(image_list)
+        return image_list
+
     };
 
     handleEffectSelect = (effect) => {
