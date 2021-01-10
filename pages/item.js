@@ -16,7 +16,7 @@ import {FaInstagram} from 'react-icons/fa';
 import {FaFacebookSquare} from 'react-icons/fa';
 import styles from "../styles/Home.module.css";
 
-class _Home extends React.Component {
+class _Item extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -103,17 +103,5 @@ class _Home extends React.Component {
     }
 }
 
-const Home = connect((state) => state)(_Home);
-export default Home;
-
-export const getServerSideProps = async (ctx) =>{
-    const req = {
-        method: 'get',
-        url:`${process.env.DOMAIN}/${process.env.ROOT_PATH}/${process.env.PRODUCTS}`,
-        headers:{'Authorization':`Basic ${process.env.SHOPIFY_BASE64}`}
-    };
-    const data = await axios(req);
-    const json = await data.data;
-    const images = await json.products?.map((ret) => ret.image.src);
-    return {props: {init_items:json,init_images:images}};
-}
+const Item = connect((state) => state)(_Item);
+export default Item;

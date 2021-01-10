@@ -6,7 +6,7 @@ import Loader from './loader';
 import TransitionEffect from './transition_effect';
 // import Grow from './grow';
 
-class MansonryGrid_ extends React.Component {
+class _MansonryGrid extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -31,7 +31,7 @@ class MansonryGrid_ extends React.Component {
     }
 
     render() {
-        const { transition, items, itemRenderer, loaded } = this.props;
+        const { transition, item_images, itemRenderer, loaded } = this.props;
         return (
             <div className="masonry-grid">
                 <Fade
@@ -48,7 +48,7 @@ class MansonryGrid_ extends React.Component {
                     <Loader />
                 </Fade>
 
-                {items.map((item, index) => (
+                {item_images.map((item, index) => (
                     // childrenとしてTransitionEffect内でdivタグ以下を読み出し
                     // カードがおのおの呼び出される
                     <TransitionEffect key={index} name={transition} in={loaded} timeout={600}>
@@ -68,19 +68,19 @@ class MansonryGrid_ extends React.Component {
     }
 }
 
-MansonryGrid_.propTypes = {
+_MansonryGrid.propTypes = {
     transition: PropTypes.string,
-    items: PropTypes.array,
+    item_images: PropTypes.array,
     itemRenderer: PropTypes.func,
     onLoaded: PropTypes.func,
 };
 
-MansonryGrid_.defaultProps = {
+_MansonryGrid.defaultProps = {
     transition: 'fade',
-    items: [],
+    item_images: [],
     itemRenderer: () => {},
     onLoaded: () => {},
 };
 
-const MansonryGrid = connect((state) => state)(MansonryGrid_);
+const MansonryGrid = connect((state) => state)(_MansonryGrid);
 export default MansonryGrid;

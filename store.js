@@ -21,16 +21,21 @@ const test_photo = [
 ];
 
 // ステート初期値
+// pageはページ種別、menuはitem絞る際のパラメータ
 const initial = {
-    effect: 'item',
+    effect: 'all',
+    page: 'top',
     loaded: false,
-    menu_list: ['top', 'item', 'myAccount', 'question'],
-    images: [
-        ...Array.from(new Array(18)).map(
-            (v, i) => 'https://www.awonderfulwonderland.com/img/20aw' + String(10 + i) + '.jpg'
-        ),
-        ...test_photo,
-    ],
+    menu_list: ['all', 'tops', 'bottoms', 'other'],
+    page_list: ['top', 'item', 'myAccount', 'inquiry'],
+    // images: [
+    //     ...Array.from(new Array(18)).map(
+    //         (v, i) => 'https://www.awonderfulwonderland.com/img/20aw' + String(10 + i) + '.jpg'
+    //     ),
+    //     ...test_photo,
+    // ],
+    items: {},
+    images: []
 };
 
 // レデューサー
@@ -52,6 +57,8 @@ function Reducer(state = initial, action) {
                 ...state,
                 loaded: false,
                 effect: action.effect,
+                items: action.items,
+                images: action.images,
             };
         default:
             return state;
