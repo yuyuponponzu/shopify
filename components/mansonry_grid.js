@@ -31,7 +31,7 @@ class _MansonryGrid extends React.Component {
     }
 
     render() {
-        const { transition, items, itemRenderer, loaded } = this.props;
+        const { transition, item_images, itemRenderer, loaded } = this.props;
         return (
             <div className="masonry-grid">
                 <Fade
@@ -48,7 +48,7 @@ class _MansonryGrid extends React.Component {
                     <Loader />
                 </Fade>
 
-                {items.map((item, index) => (
+                {item_images.map((item, index) => (
                     // childrenとしてTransitionEffect内でdivタグ以下を読み出し
                     // カードがおのおの呼び出される
                     <TransitionEffect key={index} name={transition} in={loaded} timeout={600}>
@@ -70,14 +70,14 @@ class _MansonryGrid extends React.Component {
 
 _MansonryGrid.propTypes = {
     transition: PropTypes.string,
-    items: PropTypes.array,
+    item_images: PropTypes.array,
     itemRenderer: PropTypes.func,
     onLoaded: PropTypes.func,
 };
 
 _MansonryGrid.defaultProps = {
     transition: 'fade',
-    items: [],
+    item_images: [],
     itemRenderer: () => {},
     onLoaded: () => {},
 };

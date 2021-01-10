@@ -28,12 +28,14 @@ const initial = {
     loaded: false,
     menu_list: ['all', 'tops', 'bottoms', 'other'],
     page_list: ['top', 'item', 'myAccount', 'inquiry'],
-    images: [
-        ...Array.from(new Array(18)).map(
-            (v, i) => 'https://www.awonderfulwonderland.com/img/20aw' + String(10 + i) + '.jpg'
-        ),
-        ...test_photo,
-    ],
+    // images: [
+    //     ...Array.from(new Array(18)).map(
+    //         (v, i) => 'https://www.awonderfulwonderland.com/img/20aw' + String(10 + i) + '.jpg'
+    //     ),
+    //     ...test_photo,
+    // ],
+    items: {},
+    images: []
 };
 
 // レデューサー
@@ -55,12 +57,9 @@ function Reducer(state = initial, action) {
                 ...state,
                 loaded: false,
                 effect: action.effect,
+                items: action.items,
+                images: action.images,
             };
-        case 'REQUEST_ITEM_IMAGES':
-            return {
-                ...state,
-                images : action.images,
-            }
         default:
             return state;
     }

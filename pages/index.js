@@ -21,17 +21,33 @@ class _Home extends React.Component {
         super(props);
     }
 
-    reqItem = async () => {
-        console.log("aaa");
-        const data = await axios(`/${process.env.ROOT_PATH}/${process.env.PRODUCTS}`);
-        console.log("bbb");
+    requestItemImages = async (effect) => {
+    try{
+        const req = {
+            method: 'get',
+            url: effect !== "all"? `${process.env.DOMAIN}/${process.env.ROOT_PATH}/${process.env.PRODUCTS}?product_type=${effect}}`: `${process.env.DOMAIN}/${process.env.ROOT_PATH}/${process.env.PRODUCTS}`,
+            headers:{'Authorization':`Basic ${process.env.SHOPIFY_BASE64}`}
+        };
+        const data = await axios(req);
         const json = await data.data;
-        console.log(json);
-        return await json;
+        return json;
+    } catch (e) {
+        console.log('リクエストエラー');
+        console.log(e);
+        return [];
+        }
     }
 
-    handleEffectSelect = (effect) => {
-        return this.props.dispatch({ type: 'CHENGE_MENU', effect: effect });
+    handleEffectSelect = async (effect) => {
+        const items = await this.requestItemImages(effect);
+        return await this.props.dispatch({ type: 'CHENGE_MENU', effect, items });
+    };
+
+    handleInitImages = async (init_items) => {
+        if (!this.props.images.length){
+        return await this.props.dispatch({ type: 'CHENGE_MENU', effect:"all", items: init_items, images: init_items.products.map((ret) => ret.image.src)});
+        }
+        return this.props.images;
     };
 
     itemRenderer = (item, index) => {
@@ -39,8 +55,9 @@ class _Home extends React.Component {
     };
     
     render() {
-        // this.requestItemImages(this.props.effect);
-        const a = this.reqItem();
+        // this.handleInitImages(this.props.init_items);
+        // this.handleEffectSelect("all");
+        // console.log(process.env.DOMAIN);
         return (
             <div>
                 {/* Header領域 */}
@@ -48,7 +65,6 @@ class _Home extends React.Component {
                 <title>Create Bayashi!</title>
                 <link rel="icon" href="/favicon.ico" />
                 </Head> */}
-
                 {/* Main領域 */}
                 <React.Fragment>
                     <AppHeader title="shop">
@@ -64,7 +80,7 @@ class _Home extends React.Component {
                         <MansonryGrid
                             key={this.props.effect}
                             transition="fade"
-                            items={a}
+                            items={this.props.images}
                             itemRenderer={this.itemRenderer}
                             loaded={this.props.loaded}
                         />
@@ -90,14 +106,14 @@ class _Home extends React.Component {
 const Home = connect((state) => state)(_Home);
 export default Home;
 
-// export const getServerSideProps = async (ctx) =>{
-//     const req = {
-//         method: 'get',
-//         url:`${process.env.DOMAIN}/${process.env.ROOT_PATH}/${process.env.PRODUCTS}?${querystring.stringify(ctx.query)}`,
-//         headers:{'Authorization':`Basic ${process.env.SHOPIFY_BASE64}`}
-//     };
-//     const data = await axios(req);
-//     const json = await data.data;
-//     const images = await json.products?.map((ret) => ret.image.src);
-//     return {props:{images_lists:images}};
-// }
+export const getServerSideProps = async (ctx) =>{
+    const req = {
+        method: 'get',
+        url:`${process.env.DOMAIN}/${process.env.ROOT_PATH}/${process.env.PRODUCTS}`,
+        headers:{'Authorization':`Basic ${process.env.SHOPIFY_BASE64}`}
+    };
+    const data = await axios(req);
+    const json = await data.data;
+    const images = await json.products?.map((ret) => ret.image.src);
+    return {props: {init_items:json,init_images:images}};
+}
