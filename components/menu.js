@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import Link from 'next/link';
 
 const Menu = ({ className, options, selected, onSelect }) => {
     const handleItemClick = (effect) => () => onSelect(effect);
@@ -7,6 +8,7 @@ const Menu = ({ className, options, selected, onSelect }) => {
     return (
         <ul className={classNames('menu', className)}>
             {options.map((option, index) => (
+                <Link key={index} href={{ pathname: "item", query: { product_type: option } }} >
                 <li
                     key={index}
                     className={classNames('menu-item', {
@@ -16,6 +18,7 @@ const Menu = ({ className, options, selected, onSelect }) => {
                 >
                     {option}
                 </li>
+                </Link>
             ))}
         </ul>
     );

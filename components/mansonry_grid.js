@@ -6,7 +6,7 @@ import Loader from './loader';
 import TransitionEffect from './transition_effect';
 // import Grow from './grow';
 
-class MansonryGrid_ extends React.Component {
+class _MansonryGrid extends React.Component {
     constructor(props) {
         super(props);
     }
@@ -68,19 +68,19 @@ class MansonryGrid_ extends React.Component {
     }
 }
 
-MansonryGrid_.propTypes = {
+_MansonryGrid.propTypes = {
     transition: PropTypes.string,
     items: PropTypes.array,
     itemRenderer: PropTypes.func,
     onLoaded: PropTypes.func,
 };
 
-MansonryGrid_.defaultProps = {
+_MansonryGrid.defaultProps = {
     transition: 'fade',
     items: [],
     itemRenderer: () => {},
     onLoaded: () => {},
 };
 
-const MansonryGrid = connect((state) => state)(MansonryGrid_);
+const MansonryGrid = connect((state) => state)(_MansonryGrid);
 export default MansonryGrid;
