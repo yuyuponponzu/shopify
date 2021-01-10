@@ -11,25 +11,34 @@ import fetch from 'node-fetch';
 class hoge_ extends React.Component {
     constructor(props) {
         super(props);
+        this.state={
+            loading:false
+        };
     }
 
-    RequestImages = async (req) => {
+    RequestImages(req){
         const opt =
             {
                 headers: {
                     'Authorization':'Basic MzYyZTFmMDliM2YwZWNmOGQ1MjRlYWFhZjQ2YzM2MjQ6c2hwcGFfMDcwOWVjYTM3MDg5MDM0YmQ2OGRjNDFlN2ZkYjc1Mjc='
                 }
             };
-        const res = await fetch(
+        return fetch(
             '/admin/api/2021-01/products.json?product_type=' + req,
             opt
-        );
-        const json = await res.json();
-        const image_list = await json.products.map((ret) => ret.image.src);
-        console.log(image_list)
-        return image_list
+        )
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({
+                    loading: true,
+                    data: responseJson.products.map((ret) => ret.image.src)
+                });
 
-    };
+            })
+            .catch((error) =>{
+                console.error(error);
+            });
+    }
 
     handleEffectSelect = (effect) => {
         return this.props.dispatch({ type: 'CHENGE_MENU', effect: effect });
@@ -40,55 +49,59 @@ class hoge_ extends React.Component {
     };
 
     render() {
-        // const a = this.RequestImages(this.props.effect);
-        const a = this.RequestImages('pants');
-        console.log(a);
-        return (
-            <div>
-                {/* Header�̈� */}
-                {/* <Head>
-                <title>Create Bayashi!</title>
-                <link rel="icon" href="/favicon.ico" />
-                </Head> */}
+        this.RequestImages(this.props.effect);
+        if(this.state.loading){
+            console.log('fetch data', this.state.data)
+            return (
+                <div>
+                    {/* Header�̈� */}
+                    {/* <Head>
+                    <title>Create Bayashi!</title>
+                    <link rel="icon" href="/favicon.ico" />
+                    </Head> */}
 
-                {/* Main�̈� */}
-                <React.Fragment>
-                    <AppHeader title="shop">
-                        {' '}
-                        {/* subtitle="unko bayashi"> */}
-                        <Menu
-                            className="app-menu"
-                            options={this.props.menu_list}
-                            selected={this.props.effect}
-                            onSelect={this.handleEffectSelect}
-                        />
-                        <Link href="/hoge">hoge</Link>
-                    </AppHeader>
-                    <div className="app-content">
-                        <MansonryGrid
-                            key={this.props.effect}
-                            transition="fade"
-                            // items={['a','a']}
-                            items={[a]}
-                            itemRenderer={this.itemRenderer}
-                            loaded={this.props.loaded}
-                        />
-                    </div>
-                </React.Fragment>
+                    {/* Main�̈� */}
+                    <React.Fragment>
+                        <AppHeader title="shop">
+                            {' '}
+                            {/* subtitle="unko bayashi"> */}
+                            <Menu
+                                className="app-menu"
+                                options={this.props.menu_list}
+                                selected={this.props.effect}
+                                onSelect={this.handleEffectSelect}
+                            />
+                            <Link href="/hoge">hoge</Link>
+                        </AppHeader>
+                        <div className="app-content">
+                            <MansonryGrid
+                                key={this.props.effect}
+                                transition="fade"
+                                items={this.state.data}
+                                itemRenderer={this.itemRenderer}
+                                loaded={this.props.loaded}
+                            />
+                        </div>
+                    </React.Fragment>
 
-                {/* Footer�̈� (���ƂŎg���Ƃ��p) */}
-                {/* <footer className={styles.footer}>
-                    <a
-                        href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
-                        Powered by{' bayashi nikudango '}
-                        <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-                    </a>
-                </footer> */}
-            </div>
-        );
+                    {/* Footer�̈� (���ƂŎg���Ƃ��p) */}
+                    {/* <footer className={styles.footer}>
+                        <a
+                            href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Powered by{' bayashi nikudango '}
+                            <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
+                        </a>
+                    </footer> */}
+                </div>
+            );
+        }else{
+            return (
+                <div>loading...</div>
+            )
+        }
     }
 }
 
