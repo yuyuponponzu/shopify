@@ -6,10 +6,39 @@ import MansonryGrid from '../components/mansonry_grid';
 import ImageCard from '../components/image_card';
 import Fade from '../components/fade';
 import Link from 'next/link';
+import fetch from 'node-fetch';
 
-class Home_ extends React.Component {
+class hoge_ extends React.Component {
     constructor(props) {
         super(props);
+        this.state={
+        };
+    }
+
+    RequestImages(req){
+        if(!this.props.loaded){
+            const opt =
+                {
+                    headers: {
+                        'Authorization':'Basic MzYyZTFmMDliM2YwZWNmOGQ1MjRlYWFhZjQ2YzM2MjQ6c2hwcGFfMDcwOWVjYTM3MDg5MDM0YmQ2OGRjNDFlN2ZkYjc1Mjc='
+                    }
+                };
+            return fetch(
+                '/admin/api/2021-01/products.json?product_type=' + req,
+                opt
+            )
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    this.setState({
+                        data: responseJson.products.map((ret) => ret.image.src)
+                    });
+                    this.props.dispatch({type:'LOADED_TRUE'});
+                })
+                .catch((error) =>{
+                    console.error(error);
+                });
+        }
+        return 0;
     }
 
     handleEffectSelect = (effect) => {
@@ -21,15 +50,17 @@ class Home_ extends React.Component {
     };
 
     render() {
+        this.RequestImages(this.props.effect);
+        console.log('fetch data', this.state.data)
         return (
             <div>
-                {/* Header領域 */}
+                {/* Header�̈� */}
                 {/* <Head>
                 <title>Create Bayashi!</title>
                 <link rel="icon" href="/favicon.ico" />
                 </Head> */}
 
-                {/* Main領域 */}
+                {/* Main�̈� */}
                 <React.Fragment>
                     <AppHeader title="shop">
                         {' '}
@@ -40,20 +71,20 @@ class Home_ extends React.Component {
                             selected={this.props.effect}
                             onSelect={this.handleEffectSelect}
                         />
-                        <Link href="/hoge">hoge</Link>
+                        <Link href="/">HOME</Link>
                     </AppHeader>
                     <div className="app-content">
                         <MansonryGrid
                             key={this.props.effect}
                             transition="fade"
-                            items={this.props.images}
+                            items={this.state.data}
                             itemRenderer={this.itemRenderer}
                             loaded={this.props.loaded}
                         />
                     </div>
                 </React.Fragment>
 
-                {/* Footer領域 (あとで使うとき用) */}
+                {/* Footer�̈� (���ƂŎg���Ƃ��p) */}
                 {/* <footer className={styles.footer}>
                     <a
                         href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
@@ -69,5 +100,5 @@ class Home_ extends React.Component {
     }
 }
 
-const Home = connect((state) => state)(Home_);
-export default Home;
+const Hoge = connect((state) => state)(hoge_);
+export default Hoge;
