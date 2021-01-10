@@ -25,6 +25,7 @@ const initial = {
     effect: 'item',
     loaded: false,
     menu_list: ['top', 'item', 'myAccount', 'question'],
+    page_list: ['top', 'item', 'myAccount', 'inquiry'],
     images: [
         ...Array.from(new Array(18)).map(
             (v, i) => 'https://www.awonderfulwonderland.com/img/20aw' + String(10 + i) + '.jpg'
