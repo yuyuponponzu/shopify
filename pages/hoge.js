@@ -12,7 +12,6 @@ class hoge_ extends React.Component {
     constructor(props) {
         super(props);
         this.state={
-            loading:false
         };
     }
 
@@ -30,10 +29,9 @@ class hoge_ extends React.Component {
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
-                    loading: true,
                     data: responseJson.products.map((ret) => ret.image.src)
                 });
-
+                this.props.dispatch({type:'LOADED_TRUE'});
             })
             .catch((error) =>{
                 console.error(error);
@@ -49,8 +47,7 @@ class hoge_ extends React.Component {
     };
 
     render() {
-        this.RequestImages(this.props.effect);
-        if(this.state.loading){
+        if(this.props.loaded){
             console.log('fetch data', this.state.data)
             return (
                 <div>
@@ -98,6 +95,7 @@ class hoge_ extends React.Component {
                 </div>
             );
         }else{
+            this.RequestImages(this.props.effect);
             return (
                 <div>loading...</div>
             )
