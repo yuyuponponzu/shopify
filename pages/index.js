@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import AppHeader from '../components/app_header';
-import Menu from '../components/Menu';
+import Menu from '../components/menu';
 import MansonryGrid from '../components/mansonry_grid';
 import ImageCard from '../components/image_card';
 import Fade from '../components/fade';
