@@ -30,7 +30,7 @@ class Home_ extends React.Component {
 
                 {/* Main領域 */}
                 <React.Fragment>
-                    <AppHeader title="heroku deploy test">
+                    <AppHeader title="shop">
                         {' '}
                         {/* subtitle="unko bayashi"> */}
                         <Menu
