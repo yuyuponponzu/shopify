@@ -7,7 +7,7 @@ git cloneして、developブランチに移動。
   yarn install
   （もしうまくいかあかったら一応教えてください。）
   
-これだとうまくいくかも
+バージョン依存でうまくいかないときはこれだとうまくいくかも
   npm install --save --legacy-peer-deps 
 
 そのあと
