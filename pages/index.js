@@ -1,65 +1,71 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import React from 'react';
+import { connect } from 'react-redux';
+import AppHeader from '../components/app_header';
+import Menu from '../components/menu';
+import MansonryGrid from '../components/mansonry_grid';
+import ImageCard from '../components/image_card';
+import Fade from '../components/fade';
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+class Home_ extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+    handleEffectSelect = (effect) => {
+        return this.props.dispatch({ type: 'CHENGE_MENU', effect: effect });
+    };
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+    itemRenderer = (item, index) => {
+        return <ImageCard key={index} src={item} />;
+    };
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+    render() {
+        return (
+            <div>
+                {/* Header領域 */}
+                {/* <Head>
+                <title>Create Bayashi!</title>
+                <link rel="icon" href="/favicon.ico" />
+                </Head> */}
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
+                {/* Main領域 */}
+                <React.Fragment>
+                    <AppHeader title="shop">
+                        {' '}
+                        {/* subtitle="unko bayashi"> */}
+                        <Menu
+                            className="app-menu"
+                            options={this.props.menu_list}
+                            selected={this.props.effect}
+                            onSelect={this.handleEffectSelect}
+                        />
+                    </AppHeader>
+                    <div className="app-content">
+                        <MansonryGrid
+                            key={this.props.effect}
+                            transition="fade"
+                            items={this.props.images}
+                            itemRenderer={this.itemRenderer}
+                            loaded={this.props.loaded}
+                        />
+                    </div>
+                </React.Fragment>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+                {/* Footer領域 (あとで使うとき用) */}
+                {/* <footer className={styles.footer}>
+                    <a
+                        href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Powered by{' bayashi nikudango '}
+                        <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
+                    </a>
+                </footer> */}
+            </div>
+        );
+    }
 }
+
+const Home = connect((state) => state)(Home_);
+export default Home;
